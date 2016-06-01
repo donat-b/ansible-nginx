@@ -1,0 +1,49 @@
+---
+
+- name: "{{ title }}: ensure SSL directory exists"
+  file:
+    path: "{{ nginx_ssl_path }}"
+    state: directory
+
+- name: "{{ title }}: copy SSL certificate"
+  copy:
+    content: "{{ vault_ssl.cert }}"
+    dest: "{{ ssl_certificate_path }}"
+
+- name: "{{ title }}: copy SSL key"
+  copy:
+    content: "{{ vault_ssl.key }}"
+    dest: "{{ ssl_key_path }}"
+
+- stat:
+    path: "/etc/ssl/certs/dhparam.pem"
+  register: dhparam
+
+- name: "{{ title }}: generate Diffie-Hellman group"
+  command: "openssl dhparam -out /etc/ssl/certs/dhparam.pem 4096"
+  when: dhparam.stat.exists == False
+
+- name: "{{ title }}: install vhost config"
+  template:
+    src: "library/templates/nginx.vhost.conf.j2"
+    dest: "/etc/nginx/sites-available/{{ appname }}.conf"
+  notify: reload nginx
+
+- name: "{{ title }}: enable vhost config"
+  file:
+    src: "/etc/nginx/sites-available/{{ appname }}.conf"
+    dest: "/etc/nginx/sites-enabled/{{ appname }}.conf"
+    state: link
+  notify: reload nginx
+
+- name: "{{ title }}: ensure directory for challenges exists"
+  file:
+    path: "/var/lib/acme-challenge"
+    state: directory
+    owner: www-data
+    group: www-data
+
+- name: "{{ title }}: copy ACME challenge"
+  copy:
+    content: '{{ webserver.acme.signature }}'
+    dest: '/var/lib/acme-challenge/{{ webserver.acme.name }}'
