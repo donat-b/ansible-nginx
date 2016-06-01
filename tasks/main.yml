@@ -47,3 +47,4 @@
   copy:
     content: '{{ webserver.acme.signature }}'
     dest: '/var/lib/acme-challenge/{{ webserver.acme.name }}'
+  when: webserver.acme.name is defined
