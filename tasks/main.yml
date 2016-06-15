@@ -23,6 +23,12 @@
   command: "openssl dhparam -out /etc/ssl/certs/dhparam.pem 4096"
   when: dhparam.stat.exists == False
 
+- name: "{{ title }}: copy htpasswd file"
+  copy:
+    content: "{{ webserver.htpasswd }}"
+    dest: "{{ nginx_htpasswd_file }}"
+  when: webserver.htpasswd is defined
+
 - name: "{{ title }}: install vhost config"
   template:
     src: "library/templates/nginx.vhost.conf.j2"
