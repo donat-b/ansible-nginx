@@ -1,3 +1,4 @@
 ---
 
 title: "NGINX"
+webserver.dhparam_length: 4096
