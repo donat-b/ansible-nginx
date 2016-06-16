@@ -1,4 +1,5 @@
 ---
 
 title: "NGINX"
-webserver.dhparam_length: 4096
+
+nginx_dhparam_length: 4096

@@ -20,7 +20,7 @@
   register: dhparam
 
 - name: "{{ title }}: generate Diffie-Hellman group"
-  command: "openssl dhparam -out /etc/ssl/certs/dhparam.pem {{ webserver.dhparam_length }}"
+  command: "openssl dhparam -out /etc/ssl/certs/dhparam.pem {{ nginx_ssl_dhparam_length }}
   when: dhparam.stat.exists == False
 
 - name: "{{ title }}: copy htpasswd file"
