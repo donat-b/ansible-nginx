@@ -11,11 +11,13 @@
   copy:
     content: "{{ vault_ssl.cert }}"
     dest: "{{ ssl_certificate_path }}"
+  when: vault_ssl is defined
 
 - name: "{{ title }}: copy SSL key"
   copy:
     content: "{{ vault_ssl.key }}"
     dest: "{{ ssl_key_path }}"
+  when: vault_ssl is defined
 
 - stat:
     path: "/etc/ssl/certs/dhparam.pem"
@@ -23,7 +25,9 @@
 
 - name: "{{ title }}: generate Diffie-Hellman group"
   command: "openssl dhparam -out /etc/ssl/certs/dhparam.pem {{ nginx_ssl_dhparam_length }}"
-  when: dhparam.stat.exists == False
+  when: |
+    dhparam.stat.exists == False
+    and vault_ssl is defined
 
 - name: "{{ title }}: copy htpasswd file"
   copy:
