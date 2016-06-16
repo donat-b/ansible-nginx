@@ -3,3 +3,4 @@
 title: "NGINX"
 
 nginx_ssl_dhparam_length: 4096
+nginx_ssl_path: "/etc/nginx/ssl"
