@@ -1,5 +1,7 @@
 ---
 
+- include: setup.yml
+
 - name: "{{ title }}: ensure SSL directory exists"
   file:
     path: "{{ nginx_ssl_path }}"
