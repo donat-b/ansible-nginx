@@ -59,4 +59,4 @@
   copy:
     content: '{{ nginx_acme_signature }}'
     dest: '/var/lib/acme-challenge/{{ nginx_acme_name }}'
-  when: nginx_acme_signature defined
+  when: nginx_acme_signature is defined
