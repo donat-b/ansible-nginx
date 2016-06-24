@@ -10,13 +10,13 @@
 - name: "{{ title }}: copy SSL certificate"
   copy:
     content: "{{ vault_ssl.cert }}"
-    dest: "{{ ssl_certificate_path }}"
+    dest: "{{ nginx_ssl_certificate_path }}"
   when: vault_ssl is defined
 
 - name: "{{ title }}: copy SSL key"
   copy:
     content: "{{ vault_ssl.key }}"
-    dest: "{{ ssl_key_path }}"
+    dest: "{{ nginx_ssl_key_path }}"
   when: vault_ssl is defined
 
 - stat:
