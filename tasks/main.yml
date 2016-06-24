@@ -58,5 +58,5 @@
 - name: "{{ title }}: copy ACME challenge"
   copy:
     content: '{{ nginx_acme_signature }}'
-    dest: '/var/lib/acme-challenge/{{ nginx_acme_name }}'
+    dest: '/var/lib/acme-challenge/{{ nginx_acme_signature | splitext | first }}'
   when: nginx_acme_signature is defined
