@@ -38,13 +38,13 @@
 - name: "{{ title }}: install vhost config"
   template:
     src: "library/templates/nginx.vhost.conf.j2"
-    dest: "/etc/nginx/sites-available/{{ appname }}.conf"
+    dest: "/etc/nginx/sites-available/{{ nginx_server_name }}.conf"
   notify: reload nginx
 
 - name: "{{ title }}: enable vhost config"
   file:
-    src: "/etc/nginx/sites-available/{{ appname }}.conf"
-    dest: "/etc/nginx/sites-enabled/{{ appname }}.conf"
+    src: "/etc/nginx/sites-available/{{ nginx_server_name }}.conf"
+    dest: "/etc/nginx/sites-enabled/{{ nginx_server_name }}.conf"
     state: link
   notify: reload nginx
 
@@ -57,6 +57,6 @@
 
 - name: "{{ title }}: copy ACME challenge"
   copy:
-    content: '{{ webserver.acme.signature }}'
-    dest: '/var/lib/acme-challenge/{{ webserver.acme.name }}'
-  when: webserver.acme.name is defined
+    content: '{{ nginx_acme_signature }}'
+    dest: '/var/lib/acme-challenge/{{ nginx_acme_name }}'
+  when: nginx_acme_signature defined
