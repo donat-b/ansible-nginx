@@ -29,6 +29,7 @@
     dhparam.stat.exists == False
     and vault_ssl is defined
 
+# TODO replace to lineinfile
 - name: "{{ title }}: copy htpasswd file"
   copy:
     content: "{{ nginx_htpasswd }}"
