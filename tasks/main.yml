@@ -31,13 +31,13 @@
 
 - name: "{{ title }}: copy htpasswd file"
   copy:
-    content: "{{ webserver.htpasswd }}"
-    dest: "{{ nginx_htpasswd_file }}"
-  when: webserver.htpasswd is defined
+    content: "{{ nginx_htpasswd }}"
+    dest: "{{ nginx_htpasswd_path }}"
+  when: nginx_htpasswd is defined
 
 - name: "{{ title }}: install vhost config"
   template:
-    src: "library/templates/nginx.vhost.conf.j2"
+    src: "library/templates/nginx.{{ nginx_server_name }}.j2"
     dest: "/etc/nginx/sites-available/{{ nginx_server_name }}.conf"
   notify: reload nginx
 

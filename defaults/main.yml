@@ -2,5 +2,7 @@
 
 title: "NGINX"
 
+nginx_etc_path: '/etc/nginx'
 nginx_ssl_dhparam_length: 4096
-nginx_ssl_path: "/etc/nginx/ssl"
+
+nginx_ssl_path: '{{ nginx_etc_path }}/ssl'
