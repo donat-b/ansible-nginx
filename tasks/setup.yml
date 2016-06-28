@@ -21,4 +21,4 @@
   file:
     path: "/etc/nginx/sites-enabled/default"
     state: absent
-  notify: restart nginx
+  notify: nginx reload 

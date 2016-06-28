@@ -1,7 +1,16 @@
 ---
 
-- name: reload nginx
-  service: name=nginx state=reloaded
+- name: nginx reload
+  command: nginx -t
+  notify: nginx reload
 
 - name: nginx restart
   service: name=nginx state=restarted
+  notify: nginx restart_
+
+- name: nginx reload_
+  service: name=nginx state=reloaded
+
+- name: nginx restart_
+  service: name=nginx state=restarted
+  notify: nginx test
