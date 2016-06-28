@@ -2,7 +2,7 @@
 
 - name: nginx reload
   command: nginx -t
-  notify: nginx reload
+  notify: nginx reload_
 
 - name: nginx restart
   service: name=nginx state=restarted
