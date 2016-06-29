@@ -1,0 +1,43 @@
+---
+
+- name: "{{ title }}: copy SSL certificate"
+  copy:
+    content: "{{ item.ssl.cert }}"
+    dest: "{{ nginx_ssl_certificate_path }}"
+  when: item.ssl is defined
+
+- name: "{{ title }}: copy SSL key"
+  copy:
+    content: "{{ item.ssl.key }}"
+    dest: "{{ nginx_ssl_key_path }}"
+  when: item.ssl is defined
+
+- name: "{{ title }}: install server config"
+  template:
+    src: "library/templates/nginx.{{ item.name }}.j2"
+    dest: "{{ nginx_etc_path }}/sites-available/{{ item.name }}.conf"
+  notify: nginx reload
+
+- name: "{{ title }}: enable server config"
+  file:
+    src:  "{{ nginx_etc_path }}/sites-available/{{ item.name }}.conf"
+    dest: "{{ nginx_etc_path }}/sites-enabled/{{ item.name }}.conf"
+    state: link
+  notify: nginx reload
+
+- name: "{{ title }}: ensure directory for challenges exists"
+  file:
+    path: '{{ nginx_ssl_acme_path }}'
+    state: directory
+
+- name: "{{ title }}: copy ACME challenge"
+  copy:
+    content: '{{ item.acme_signature }}'
+    dest: '/var/lib/acme-challenge/{{ item.acme_signature | splitext | first }}'
+  when: item.acme_signature is defined
+
+- name: "{{ title }}: copy htpasswd file"
+  template:
+    src: 'htpasswd.j2'
+    dest: '{{ nginx_htpasswd_path }}'
+  when: item.auth is defined

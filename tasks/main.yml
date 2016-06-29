@@ -1,23 +1,11 @@
 ---
 
-- include: setup.yml
+- include: 'setup.yml'
 
 - name: "{{ title }}: ensure SSL directory exists"
   file:
     path: "{{ nginx_ssl_path }}"
     state: directory
-
-- name: "{{ title }}: copy SSL certificate"
-  copy:
-    content: "{{ vault_ssl.cert }}"
-    dest: "{{ nginx_ssl_certificate_path }}"
-  when: vault_ssl is defined
-
-- name: "{{ title }}: copy SSL key"
-  copy:
-    content: "{{ vault_ssl.key }}"
-    dest: "{{ nginx_ssl_key_path }}"
-  when: vault_ssl is defined
 
 - stat:
     path: "/etc/ssl/certs/dhparam.pem"
@@ -29,35 +17,6 @@
     dhparam.stat.exists == False
     and vault_ssl is defined
 
-# TODO use jinja template here
-- name: "{{ title }}: copy htpasswd file"
-  copy:
-    content: "{{ nginx_htpasswd }}"
-    dest: "{{ nginx_htpasswd_path }}"
-  when: nginx_htpasswd is defined
-
-- name: "{{ title }}: install vhost config"
-  template:
-    src: "library/templates/nginx.{{ nginx_server_name }}.j2"
-    dest: "/etc/nginx/sites-available/{{ nginx_server_name }}.conf"
-  notify: nginx reload 
-
-- name: "{{ title }}: enable vhost config"
-  file:
-    src: "/etc/nginx/sites-available/{{ nginx_server_name }}.conf"
-    dest: "/etc/nginx/sites-enabled/{{ nginx_server_name }}.conf"
-    state: link
-  notify: nginx reload 
-
-- name: "{{ title }}: ensure directory for challenges exists"
-  file:
-    path: "/var/lib/acme-challenge"
-    state: directory
-    owner: www-data
-    group: www-data
-
-- name: "{{ title }}: copy ACME challenge"
-  copy:
-    content: '{{ nginx_acme_signature }}'
-    dest: '/var/lib/acme-challenge/{{ nginx_acme_signature | splitext | first }}'
-  when: nginx_acme_signature is defined
+- include: 'configuration.yml'
+  with_items: '{{ nginx_servers }}'
+  tags: config

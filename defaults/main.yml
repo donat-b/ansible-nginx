@@ -6,8 +6,23 @@ nginx_etc_path: '/etc/nginx'
 nginx_log_path: '/var/log/nginx'
 nginx_ssl_path: '{{ nginx_etc_path }}/ssl'
 
-nginx_htpasswd_path: '{{ nginx_etc_path }}/{{ nginx_server_name }}.htpasswd'
-nginx_ssl_dhparam_length: 4096
+nginx_htpasswd_path: '{{ nginx_etc_path }}/{{ item.server_name }}.htpasswd'
 
-nginx_ssl_certificate_path: "{{ nginx_ssl_path }}/{{ nginx_server_name }}.pem"
-nginx_ssl_key_path: "{{ nginx_ssl_path }}/{{ nginx_server_name }}.key"
+nginx_ssl_dhparam_length:   '4096'
+nginx_ssl_certificate_path: '{{ nginx_ssl_path }}/{{ item.server_name }}_chn.pem'
+nginx_ssl_key_path:         '{{ nginx_ssl_path }}/{{ item.server_name }}_key.pem'
+nginx_ssl_acme_path:        '/var/lib/acme-challenge'
+
+#vault_ssl:
+#  cert:
+#  key:
+#
+#nginx_servers:
+#  - name: example.com
+#    server_name: example.com
+#    ssl: '{{ vault_ssl }}'
+#    auth:
+#      - name: bob
+#        pass: verysecuremuchwow
+#      - name: alice
+#        pass: verysecuremuchwow
