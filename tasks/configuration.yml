@@ -39,10 +39,12 @@
 - name: '{{ title }}: copy htpasswd file'
   htpasswd:
     path: '{{ nginx_htpasswd_path }}'
-    name: '{{ item.name }}'
-    password: '{{ item.pass }}'
+    name: '{{ user.name }}'
+    password: '{{ user.pass }}'
     owner: 'root'
     group: 'www-data'
     mode: '0644'
-  with_items: '{{ item.auth }}'
   when: item.auth is defined
+  with_items: '{{ item.auth }}'
+  loop_control:
+    loop_var: user

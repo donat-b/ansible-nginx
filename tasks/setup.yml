@@ -11,6 +11,12 @@
     state: latest
     update_cache: yes
 
+- name: '{{ title }}: ensure python-passlib is present'
+  apt:
+    package: 'python-passlib'
+    state: 'latest'
+    update_cache: 'yes'
+
 - name: "{{ title }}: ensure service started and enabled"
   service:
     name: nginx
