@@ -19,4 +19,4 @@
 
 - include: 'configuration.yml'
   with_items: '{{ nginx_servers }}'
-  tags: config
+  tags: nginx_config
