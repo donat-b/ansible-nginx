@@ -13,6 +13,8 @@ nginx_ssl_certificate_path: '{{ nginx_ssl_path }}/{{ item.server_name }}_chn.pem
 nginx_ssl_key_path:         '{{ nginx_ssl_path }}/{{ item.server_name }}_key.pem'
 nginx_ssl_acme_path:        '/var/lib/acme-challenge'
 
+nginx_user: 'www-data'
+
 #vault_ssl:
 #  cert:
 #  key:
