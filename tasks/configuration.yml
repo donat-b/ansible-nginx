@@ -7,9 +7,7 @@
 
 - name: '{{ title }}: generate Diffie-Hellman group'
   command: 'openssl dhparam -out {{ nginx_ssl_dhparam_path }} {{ nginx_ssl_dhparam_length }}'
-  when: >
-    dhparam.stat.exists == False
-    and vault_ssl is defined
+  when: dhparam.stat.exists == False
 
 - name: '{{ title }}: ensure directory for certificates exists'
   file:
