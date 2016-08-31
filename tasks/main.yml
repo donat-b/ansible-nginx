@@ -3,6 +3,14 @@
 
 - include: 'setup.yml'
 
+- stat:
+    path: '{{ nginx_ssl_dhparam_path }}'
+  register: dhparam
+
+- name: '{{ title }}: generate Diffie-Hellman group'
+  command: 'openssl dhparam -out {{ nginx_ssl_dhparam_path }} {{ nginx_ssl_dhparam_length }}'
+  when: dhparam.stat.exists == False
+
 - include: 'configuration.yml'
   with_items: '{{ nginx_servers }}'
   tags: nginx_config

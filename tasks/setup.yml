@@ -1,4 +1,5 @@
 ---
+# vi: set ft=ansible :
 
 - name: "{{ title }}: add PPA repository"
   apt_repository:

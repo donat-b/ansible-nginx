@@ -1,14 +1,6 @@
 ---
 # vi: set ft=ansible :
 
-- stat:
-    path: '{{ nginx_ssl_dhparam_path }}'
-  register: dhparam
-
-- name: '{{ title }}: generate Diffie-Hellman group'
-  command: 'openssl dhparam -out {{ nginx_ssl_dhparam_path }} {{ nginx_ssl_dhparam_length }}'
-  when: dhparam.stat.exists == False
-
 - name: '{{ title }}: ensure directory for certificates exists'
   file:
     path: '{{ nginx_ssl_path }}'
