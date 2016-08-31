@@ -1,4 +1,10 @@
 ---
+# vi: set ft=ansible :
+
+- name: '{{ title }}: ensure directory for certificates exists'
+  file:
+    path: '{{ nginx_ssl_path }}'
+    state: directory
 
 - name: '{{ title }}: copy SSL certificate'
   copy:
