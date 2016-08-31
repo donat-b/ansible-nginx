@@ -3,16 +3,6 @@
 
 - include: 'setup.yml'
 
-- stat:
-    path: "/etc/ssl/certs/dhparam.pem"
-  register: dhparam
-
-- name: "{{ title }}: generate Diffie-Hellman group"
-  command: "openssl dhparam -out /etc/ssl/certs/dhparam.pem {{ nginx_ssl_dhparam_length }}"
-  when: |
-    dhparam.stat.exists == False
-    and vault_ssl is defined
-
 - include: 'configuration.yml'
   with_items: '{{ nginx_servers }}'
   tags: nginx_config
