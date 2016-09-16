@@ -1,6 +1,15 @@
 ---
 # vi: set ft=ansible :
 
+- name: '{{ title }}: disable server tokens'
+  lineinfile:
+    dest:         '{{ nginx_etc_path }}/nginx.conf'
+    state:        'present'
+    create:       'no'
+    insertafter:  '^http {$'
+    regexp:       "\t?#? ?server_tokens .*$"
+    line:         "\tserver_tokens off;"
+
 - name: '{{ title }}: ensure directory for certificates exists'
   file:
     path: '{{ nginx_ssl_path }}'
