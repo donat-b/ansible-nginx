@@ -1,6 +1,11 @@
 ---
 # vi: set ft=ansible :
 
+- name: '{{ title }}: ensure repository key is present'
+  apt_key:
+    url: 'https://nginx.org/keys/nginx_signing.key'
+    state: present
+
 - name: '{{ title }}: ensure repository is present'
   apt_repository:
     repo: 'ppa:nginx/stable'
