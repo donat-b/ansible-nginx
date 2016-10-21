@@ -1,10 +1,17 @@
 ---
 # vi: set ft=ansible :
 
-- name: "{{ title }}: add PPA repository"
+- name: '{{ title }}: ensure repository is present'
   apt_repository:
     repo: 'ppa:nginx/stable'
     state: present
+  when: ansible_distribution == 'Ubuntu'
+
+- name: '{{ title }}: ensure repository is present'
+  apt_repository:
+    repo: 'deb http://nginx.org/packages/debian/ {{ ansible_distribution_release }} nginx'
+    state: present
+  when: ansible_distribution == 'Debian'
 
 - name: "{{ title }}: install the server"
   apt:
