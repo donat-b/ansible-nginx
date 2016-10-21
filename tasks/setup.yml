@@ -1,6 +1,14 @@
 ---
 # vi: set ft=ansible :
 
+- name: '{{ title }}: ensure required packages are present'
+  apt:
+    package: '{{ item }}'
+    state: present
+  with_items:
+    - python-urllib3
+    - python-ndg-httpsclient
+
 - name: '{{ title }}: ensure repository key is present'
   apt_key:
     url: 'https://nginx.org/keys/nginx_signing.key'
