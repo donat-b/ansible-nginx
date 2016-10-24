@@ -24,6 +24,7 @@
   apt_repository:
     repo: 'deb http://nginx.org/packages/debian/ {{ ansible_distribution_release }} nginx'
     state: present
+    validate_certs: no
   when: ansible_distribution == 'Debian'
 
 - name: "{{ title }}: install the server"
