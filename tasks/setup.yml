@@ -13,6 +13,8 @@
   apt_key:
     url: 'https://nginx.org/keys/nginx_signing.key'
     state: present
+    validate_certs: no
+  when: ansible_distribution == 'Debian'
 
 - name: '{{ title }}: ensure repository is present'
   apt_repository:
@@ -24,7 +26,6 @@
   apt_repository:
     repo: 'deb http://nginx.org/packages/debian/ {{ ansible_distribution_release }} nginx'
     state: present
-    validate_certs: no
   when: ansible_distribution == 'Debian'
 
 - name: "{{ title }}: install the server"
