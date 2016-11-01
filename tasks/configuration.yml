@@ -41,17 +41,20 @@
   file:
     path: '{{ nginx_ssl_acme_path }}'
     state: 'absent'
+  tags: nginx_acme
 
 - name: '{{ title }}: ensure directory for challenges exists'
   file:
     path: '{{ nginx_ssl_acme_path }}'
     state: 'directory'
+  tags: nginx_acme
 
 - name: '{{ title }}: copy ACME challenge'
   copy:
     content: '{{ item.acme_signature }}'
     dest: '/var/lib/acme-challenge/{{ item.acme_signature | splitext | first }}'
   when: item.acme_signature is defined
+  tags: nginx_acme
 
 - name: '{{ title }}: copy htpasswd file'
   htpasswd:
