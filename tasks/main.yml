@@ -1,7 +1,7 @@
 ---
 # vi: set ft=ansible :
 
-- include: 'setup.yml'
+- include: 'setup-Debian.yml'
 
 - stat:
     path: '{{ nginx_ssl_dhparam_path }}'
