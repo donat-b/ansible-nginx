@@ -19,16 +19,20 @@ nginx_max_body_size: '2M'
 
 nginx_user: 'www-data'
 
-#vault_ssl:
-#  cert:
-#  key:
+# vault_ssl:
+#   cert:
+#   key:
 #
-#nginx_servers:
-#  - name: example.com
-#    server_name: example.com
-#    ssl: '{{ vault_ssl }}'
-#    auth:
-#      - name: bob
-#        pass: verysecuremuchwow
-#      - name: alice
-#        pass: verysecuremuchwow
+# nginx_servers:
+#   - name: example.com
+#     server_name: example.com
+#     ssl: '{{ vault_ssl }}'
+#     auth:
+#       - name: bob
+#         pass: verysecuremuchwow
+#       - name: alice
+#         pass: verysecuremuchwow
+#
+# nginx_includes:
+#   - proxy
+#   - ssl
