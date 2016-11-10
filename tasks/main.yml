@@ -19,6 +19,7 @@
     owner: 'root'
     group: '{{ nginx_user }}'
     backup: 'yes'
+  tags: nginx_config
   with_items: '{{ nginx_includes | default([]) }}'
   notify: nginx reload
 
