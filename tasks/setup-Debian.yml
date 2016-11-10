@@ -36,14 +36,14 @@
 
 - name: "{{ title }}: install the server"
   apt:
-    package: nginx
-    state: latest
+    package: 'nginx'
+    state: 'present'
     update_cache: yes
 
 - name: '{{ title }}: ensure python-passlib is present'
   apt:
     package: 'python-passlib'
-    state: 'latest'
+    state: 'present'
     update_cache: 'yes'
 
 - name: "{{ title }}: ensure service started and enabled"
