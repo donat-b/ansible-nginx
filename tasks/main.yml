@@ -13,7 +13,7 @@
 
 - name: '{{ title }}: install config includes'
   template:
-    src: 'library/templates/nginx.{{ item }}_params.j2'
+    src: 'library/templates/nginx.{{ item }}.j2'
     dest: '{{ nginx_etc_path }}/{{ item }}'
     mode: '0640'
     owner: 'root'
