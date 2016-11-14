@@ -19,12 +19,14 @@
   copy:
     content: '{{ item.ssl.cert }}'
     dest: '{{ nginx_ssl_certificate_path }}'
+  notify: nginx reload
   when: item.ssl is defined
 
 - name: '{{ title }}: copy SSL key'
   copy:
     content: '{{ item.ssl.key }}'
     dest: '{{ nginx_ssl_key_path }}'
+  notify: nginx reload
   when: item.ssl is defined
 
 - name: '{{ title }}: install server config'
