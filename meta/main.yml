@@ -1,0 +1,19 @@
+---
+# vi: set ft=ansible :
+
+galaxy_info:
+  author: 'donat-b'
+  description: 'NGiNX'
+  license: 'BSD'
+  min_ansible_version: 1.9
+  platforms:
+    - name: Debian
+      versions:
+      - all
+    - name: Ubuntu
+      versions:
+      - all
+  galaxy_tags:
+    - web
+
+dependencies: []
