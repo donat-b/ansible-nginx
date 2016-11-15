@@ -3,7 +3,8 @@
 
 - include: 'setup-Debian.yml'
 
-- stat:
+- name: '{{ title }}: check if Diffie-Hellman group file exists'
+  stat:
     path: '{{ nginx_ssl_dhparam_path }}'
   register: dhparam
 
