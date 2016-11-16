@@ -14,4 +14,3 @@
 
 - name: nginx restart_
   service: name=nginx state=restarted
-  notify: nginx test
