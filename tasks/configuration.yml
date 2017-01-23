@@ -54,9 +54,11 @@
 
 - name: '{{ title }}: copy ACME challenge'
   copy:
-    content: '{{ item.acme_signature }}'
-    dest: '/var/lib/acme-challenge/{{ item.acme_signature | splitext | first }}'
+    content: '{{ acme }}'
+    dest: '/var/lib/acme-challenge/{{ acme | splitext | first }}'
   with_items: '{{ item.acme_signature | default([]) }}'
+  loop_control:
+    loop_var: acme
   tags: nginx_acme
 
 - name: '{{ title }}: copy htpasswd file'
