@@ -56,7 +56,7 @@
   copy:
     content: '{{ item.acme_signature }}'
     dest: '/var/lib/acme-challenge/{{ item.acme_signature | splitext | first }}'
-  when: item.acme_signature is defined
+  with_items: '{{ item.acme_signature | default([]) }}'
   tags: nginx_acme
 
 - name: '{{ title }}: copy htpasswd file'
