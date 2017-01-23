@@ -50,15 +50,3 @@
     name: nginx
     enabled: yes
     state: started
-
-- name: '{{ title }}: ensure the default vhost is disabled'
-  file:
-    path: '/etc/nginx/conf.d/default'
-    state: 'absent'
-  notify: nginx reload
-
-- name: '{{ title }}: ensure the default vhost is disabled'
-  file:
-    path: '/etc/nginx/nabled/default'
-    state: 'absent'
-  notify: nginx reload
