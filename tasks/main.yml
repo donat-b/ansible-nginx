@@ -7,6 +7,7 @@
   command: 'openssl dhparam -out {{ nginx_ssl_dhparam_path }} {{ nginx_ssl_dhparam_length }}'
   args:
     creates: '{{ nginx_ssl_dhparam_path }}'
+  tags: nginx_config
 
 - name: '{{ title }}: install config includes'
   template:
