@@ -2,11 +2,15 @@
 # vi: set ft=ansible :
 
 - name: nginx reload
-  service: name=nginx state=reloaded
+  service:
+    name: nginx
+    state: reloaded
 
 - name: nginx restart
   command: nginx -t
   notify: nginx restart_
 
 - name: nginx restart_
-  service: name=nginx state=restarted
+  service:
+    name: nginx
+    state: restarted

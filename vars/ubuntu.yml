@@ -1,0 +1,5 @@
+---
+# vi: set ft=ansible :
+
+nginx_repo:
+  source: 'ppa:nginx/stable'

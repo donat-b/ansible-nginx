@@ -1,7 +1,20 @@
 ---
 # vi: set ft=ansible :
 
-- include: 'setup-Debian.yml'
+- name: 'set os dependent variables'
+  include_vars: "{{ item }}"
+  with_first_found:
+    - files:
+      - '{{ ansible_distribution|lower }}-{{ ansible_distribution_version }}.yml'
+      - '{{ ansible_distribution|lower }}-{{ ansible_distribution_release }}.yml'
+      - '{{ ansible_distribution|lower }}-{{ ansible_distribution_major_version }}.yml'
+      - '{{ ansible_distribution|lower }}.yml'
+      - '{{ ansible_os_family|lower }}.yml'
+      paths:
+        - '../vars'
+
+- include: 'install.yml'
+  static: yes
 
 - name: '{{ title }}: generate Diffie-Hellman group'
   command: 'openssl dhparam -out {{ nginx_ssl_dhparam_path }} {{ nginx_ssl_dhparam_length }}'
@@ -21,6 +34,16 @@
   with_items: '{{ nginx_includes | default([]) }}'
   notify: nginx reload
 
-- include: 'configuration.yml'
+- name: '{{ title }}: disable server tokens'
+  lineinfile:
+    dest:         '{{ nginx_etc_path }}/nginx.conf'
+    state:        'present'
+    create:       'no'
+    insertafter:  '^http {$'
+    regexp:       "\t?#? ?server_tokens .*$"
+    line:         "\tserver_tokens off;"
+  when: nginx_disable_server_tokens
+
+- include: 'configure.yml'
   with_items: '{{ nginx_servers }}'
   tags: nginx_config

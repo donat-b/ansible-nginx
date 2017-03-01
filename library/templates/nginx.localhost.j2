@@ -1,0 +1,36 @@
+upstream backend {
+  server '127.0.0.1:8080' fail_timeout=0;
+}
+
+server {
+  listen 80;
+  listen [::]:80;
+
+  server_name '{{ item.server_name }}';
+
+  error_log  '{{ nginx_log_path }}/{{ item.server_name }}.error.log';
+  access_log '{{ nginx_log_path }}/{{ item.server_name }}.access.log';
+
+  client_max_body_size '{{ nginx_max_body_size }}';
+
+  location /media {
+    alias        '/var/lib/app/media';
+    access_log   off;
+    index        off;
+    expires      30d;
+    add_header   Pragma        public;
+    add_header   Cache-Control 'public';
+  }
+
+  location / {
+    include              proxy_params;
+    proxy_pass           http://backend;
+    proxy_set_header     X-Real-Host $host;
+    real_ip_header       X-Forwarded-For;
+    proxy_read_timeout   30s;
+    proxy_redirect       off;
+
+    #auth_basic           'Restricted';
+    #auth_basic_user_file '/etc/nginx/{{ item.server_name }}.htpasswd';
+  }
+}

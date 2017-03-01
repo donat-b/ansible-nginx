@@ -1,16 +1,6 @@
 ---
 # vi: set ft=ansible :
 
-- name: '{{ title }}: disable server tokens'
-  lineinfile:
-    dest:         '{{ nginx_etc_path }}/nginx.conf'
-    state:        'present'
-    create:       'no'
-    insertafter:  '^http {$'
-    regexp:       "\t?#? ?server_tokens .*$"
-    line:         "\tserver_tokens off;"
-  when: nginx_disable_server_tokens
-
 - name: '{{ title }}: ensure directory for certificates exists'
   file:
     path: '{{ nginx_ssl_path }}'
@@ -39,12 +29,6 @@
     group: '{{ nginx_user }}'
     backup: 'yes'
   notify: nginx reload
-
-- name: '{{ title }}: remove old challenge files'
-  file:
-    path: '{{ nginx_ssl_acme_path }}'
-    state: 'absent'
-  tags: nginx_acme
 
 - name: '{{ title }}: ensure directory for challenges exists'
   file:

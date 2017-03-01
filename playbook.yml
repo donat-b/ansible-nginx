@@ -1,0 +1,17 @@
+---
+
+- hosts: all
+  gather_facts: false
+  tasks:
+    - name: 'ensure python2 is present'
+      raw: 'which python || apt-get install -y python python-simplejson'
+      changed_when: false
+
+- hosts: all
+  vars:
+    nginx_ssl_dhparam_length: 256
+    nginx_servers:
+      - name: localhost
+        server_name: localhost
+  roles:
+    - role: nginx

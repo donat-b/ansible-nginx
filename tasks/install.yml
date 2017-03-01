@@ -1,0 +1,42 @@
+---
+# vi: set ft=ansible :
+
+- name: '{{ title }}: ensure repository is present'
+  apt_repository:
+    repo: '{{ item.source }}'
+    state: present
+  with_items: '{{ depends_repos | default([]) }}'
+
+- name: '{{ title }}: ensure required packages are present'
+  apt:
+    package: '{{ item }}'
+    state: present
+  with_items: '{{ depends | default([]) }}'
+
+- name: '{{ title }}: ensure nginx repository key is present'
+  apt_key:
+    url: '{{ nginx_repo.key }}'
+    state: present
+    validate_certs: no
+  when: nginx_repo.key is defined
+
+- name: '{{ title }}: ensure nginx repository is present'
+  apt_repository:
+    repo: '{{ nginx_repo.source }}'
+    state: present
+
+- name: '{{ title }}: ensure python-passlib is present'
+  apt:
+    package: 'python-passlib'
+    state: 'present'
+
+- name: "{{ title }}: install the server"
+  apt:
+    package: 'nginx'
+    state: 'present'
+
+- name: '{{ title }}: ensure nginx started'
+  service:
+    name: 'nginx'
+    state: 'started'
+    enabled: yes

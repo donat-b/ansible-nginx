@@ -1,0 +1,13 @@
+---
+# vi: set ft=ansible :
+
+nginx_repo:
+  source: 'deb http://nginx.org/packages/debian/ {{ ansible_distribution_release }} nginx'
+  key:    'https://nginx.org/keys/nginx_signing.key'
+
+depends:
+  - python-urllib3
+  - python-ndg-httpsclient
+
+depends_repos:
+  - source: 'deb http://ftp.de.debian.org/debian wheezy-backports main'
