@@ -1,7 +1,7 @@
 ---
 # vi: set ft=ansible :
 
-title: "NGINX"
+title: "nginx"
 
 nginx_etc_path: '/etc/nginx'
 nginx_log_path: '/var/log/nginx'
@@ -19,4 +19,7 @@ nginx_max_body_size: '2M'
 
 nginx_user: 'www-data'
 
-nginx_disable_server_tokens: yes
+# playbook specific toggles
+
+nginx_disable_server_tokens: true
+nginx_skip_install: false

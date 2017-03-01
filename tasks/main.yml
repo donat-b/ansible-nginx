@@ -15,6 +15,7 @@
 
 - include: 'install.yml'
   static: yes
+  when: not nginx_skip_install
 
 - name: '{{ title }}: generate Diffie-Hellman group'
   command: 'openssl dhparam -out {{ nginx_ssl_dhparam_path }} {{ nginx_ssl_dhparam_length }}'
