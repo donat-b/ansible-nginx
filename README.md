@@ -22,10 +22,10 @@ nginx_user: 'www-data'
 nginx_max_body_size: 2M
 
 # Enables or disables emitting nginx version in error messages and in the “Server” response header field
-nginx_disable_server_tokens: yes
+nginx_server_tokens: yes
 
 # Vault encrypted SSL certificates and keys
-vault_ssl:
+vault_tls:
   key: |
     -----BEGIN PRIVATE KEY-----
     ...
@@ -36,23 +36,42 @@ vault_ssl:
     -----END CERTIFICATE-----
 
 # List of files to be included in configuration files (proxy_params, etc)
+# template module
 # Playbook path: library/templates/nginx.{{ item }}.j2
 # Server path:   {{ nginx_etc_path }}/{{ item }}
 nginx_includes:
   - proxy
-  - ssl
+  - tls
+
+# List of files to be included in http context
+# for loop in nginx.conf template
+nginx_http_includes:
+  - log_formats
+  - proxy_params
+  - realip
 
 # Playbook path: library/templates/nginx.{{ item.name }}.j2
 # Server path:   {{ nginx_etc_path }}/conf.d/{{ item.name }}.conf
 nginx_servers:
   - name: example.com          # the file name would be nginx.example.com.j2
-    server_name: example.com   # hostname
-    ssl: '{{ vault_ssl }}'     # references the dictionary from vault
+    server_name: www.example.com   # hostname
+    tls: '{{ vault_tls }}'     # references the dictionary from vault
     auth:                      # basic auth users
       - name: alice
         pass: suchsecurity
       - name: bob
         pass: verysafe
+
+# SLB frontend
+frontlb_servers:
+  - name: example.com
+    server_name: www.example.com
+    lb_method: 'least_conn'
+    tls: '{{ vault_tls }}'
+    upstreams:
+      - 10.1.250.2
+      - 10.1.250.3
+      - 10.1.250.4
 ```
 
 
@@ -73,9 +92,8 @@ server {
   error_log  '{{ nginx_log_path }}/{{ item.server_name }}.error.log';
   access_log '{{ nginx_log_path }}/{{ item.server_name }}.access.log';
 
-  ssl_certificate '{{ nginx_ssl_certificate_path }}';
-  ssl_certificate_key '{{ nginx_ssl_key_path }}';
-  include ssl_params;
+  tls_certificate '{{ nginx_tls_certificate_path }}';
+  tls_certificate_key '{{ nginx_tls_key_path }}';
 
   client_max_body_size '{{ nginx_max_body_size }}';
 

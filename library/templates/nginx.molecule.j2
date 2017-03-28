@@ -1,3 +1,8 @@
+map $scheme $scheme_https {
+    https on;
+    default off;
+}
+
 upstream backend {
   server '127.0.0.1:8080' fail_timeout=0;
 }
@@ -8,8 +13,8 @@ server {
 
   server_name '{{ item.server_name }}';
 
-  error_log  '{{ nginx_log_path }}/{{ item.server_name }}.error.log';
   access_log '{{ nginx_log_path }}/{{ item.server_name }}.access.log';
+  error_log  '{{ nginx_log_path }}/{{ item.server_name }}.error.log';
 
   client_max_body_size '{{ nginx_max_body_size }}';
 
@@ -27,7 +32,6 @@ server {
     proxy_pass           http://backend;
     proxy_set_header     X-Real-Host $host;
     real_ip_header       X-Forwarded-For;
-    proxy_read_timeout   30s;
     proxy_redirect       off;
 
     #auth_basic           'Restricted';

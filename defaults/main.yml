@@ -3,23 +3,30 @@
 
 title: "nginx"
 
+nginx_user: 'www-data'
+
 nginx_etc_path: '/etc/nginx'
 nginx_log_path: '/var/log/nginx'
-nginx_ssl_path: '{{ nginx_etc_path }}/ssl'
+nginx_tls_path: '{{ nginx_etc_path }}/tls'
+
+nginx_http_port : 80
+nginx_https_port: 443
 
 nginx_htpasswd_path: '{{ nginx_etc_path }}/{{ item.server_name }}.htpasswd'
 
-nginx_ssl_dhparam_length:   '1024'
-nginx_ssl_dhparam_path:     '/etc/ssl/certs/dhparam.pem'
-nginx_ssl_certificate_path: '{{ nginx_ssl_path }}/{{ item.server_name }}_chn.pem'
-nginx_ssl_key_path:         '{{ nginx_ssl_path }}/{{ item.server_name }}_key.pem'
-nginx_ssl_acme_path:        '/var/lib/acme-challenge/'
+nginx_tls_certificate_path: '{{ nginx_tls_path }}/{{ item.server_name }}_chn.pem'
+nginx_tls_key_path        : '{{ nginx_tls_path }}/{{ item.server_name }}_key.pem'
+nginx_tls_certbot_fc      : '{{ nginx_tls_path }}/{{ item.server_name }}/fullchain.pem'
+nginx_tls_certbot_key     : '{{ nginx_tls_path }}/{{ item.server_name }}/privkey.pem'
+
+nginx_acme_path       : '/var/lib/acme-challenge/'
+
+nginx_dhparam_length:   '1024'
+nginx_dhparam_path:     '/etc/ssl/certs/dhparam.pem'
 
 nginx_max_body_size: '2M'
 
-nginx_user: 'www-data'
-
 # playbook specific toggles
 
-nginx_disable_server_tokens: true
+nginx_server_tokens: false
 nginx_skip_install: false

@@ -1,3 +1,4 @@
+*.log
+*.retry
 .molecule
 .vagrant
-*.retry

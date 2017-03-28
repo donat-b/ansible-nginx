@@ -9,9 +9,34 @@
 
 - hosts: all
   vars:
-    nginx_ssl_dhparam_length: 256
+    nginx_dhparam_length: 256
+
+    nginx_includes:
+      - log_formats
+      - proxy_params
+      - realip
+
+    nginx_http_includes:
+      - log_formats
+      - proxy_params
+      - realip
+
+    nginx_real_ip_from:
+      - 10.0.0.0/8
+      - 192.168.0.0/16
+
     nginx_servers:
-      - name: localhost
-        server_name: localhost
+      - name: molecule
+        server_name: _
+
+    frontlb_servers:
+      - name: example.com
+        server_name: example.com
+        lb_method: 'least_conn'
+        upstreams:
+          - address : '10.1.109.5'
+          - address : '10.1.109.6'
+          - address : '10.1.109.7'
+
   roles:
     - role: nginx

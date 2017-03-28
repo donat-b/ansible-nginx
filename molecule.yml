@@ -26,4 +26,4 @@ vagrant:
   instances:
     - name: nginx
       ansible_groups:
-        - group1
+        - websersers

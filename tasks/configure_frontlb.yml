@@ -3,27 +3,27 @@
 
 - name: '{{ title }}: ensure directory for certificates exists'
   file:
-    path: '{{ nginx_tls_path }}'
+    path: '{{ nginx_tls_path }}/{{ item.server_name }}'
     state: directory
 
 - name: '{{ title }}: copy TLS certificate'
   copy:
     content: '{{ item.tls.cert }}'
-    dest: '{{ nginx_tls_certificate_path }}'
+    dest: '{{ nginx_tls_path }}/{{ item.server_name }}/fullchain.pem'
   notify: nginx reload
   when: item.tls is defined
 
 - name: '{{ title }}: copy TLS key'
   copy:
     content: '{{ item.tls.key }}'
-    dest: '{{ nginx_tls_key_path }}'
+    dest: '{{ nginx_tls_path }}/{{ item.server_name }}/privkey.pem'
   notify: nginx reload
   when: item.tls is defined
 
 - name: '{{ title }}: install server config'
   template:
-    src: 'library/templates/nginx.{{ item.name }}.j2'
-    dest: '{{ nginx_etc_path }}/conf.d/{{ item.name }}.conf'
+    src: 'library/templates/nginx.frontlb.j2'
+    dest: '{{ nginx_etc_path }}/conf.d/frontlb.conf'
     mode: '0640'
     owner: 'root'
     group: '{{ nginx_user }}'

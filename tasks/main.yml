@@ -18,12 +18,12 @@
   when: not nginx_skip_install
 
 - name: '{{ title }}: generate Diffie-Hellman group'
-  command: 'openssl dhparam -out {{ nginx_ssl_dhparam_path }} {{ nginx_ssl_dhparam_length }}'
+  command: 'openssl dhparam -out {{ nginx_dhparam_path }} {{ nginx_dhparam_length }}'
   args:
-    creates: '{{ nginx_ssl_dhparam_path }}'
+    creates: '{{ nginx_dhparam_path }}'
   tags: nginx_config
 
-- name: '{{ title }}: install config includes'
+- name: 'deploy config includes'
   template:
     src: 'library/templates/nginx.{{ item }}.j2'
     dest: '{{ nginx_etc_path }}/{{ item }}'
@@ -35,16 +35,23 @@
   with_items: '{{ nginx_includes | default([]) }}'
   notify: nginx reload
 
-- name: '{{ title }}: disable server tokens'
-  lineinfile:
-    dest:         '{{ nginx_etc_path }}/nginx.conf'
-    state:        'present'
-    create:       'no'
-    insertafter:  '^http {$'
-    regexp:       "\t?#? ?server_tokens .*$"
-    line:         "\tserver_tokens off;"
-  when: nginx_disable_server_tokens
+- name: 'deploy {{ nginx_etc_path }}/nginx.conf'
+  template:
+    src: 'library/templates/_nginx.conf.j2'
+    dest: '{{ nginx_etc_path }}/nginx.conf'
+    mode: '0640'
+    owner: 'root'
+    group: '{{ nginx_user }}'
+    backup: 'yes'
+  tags: nginx_config
+  notify: nginx reload
 
-- include: 'configure.yml'
-  with_items: '{{ nginx_servers }}'
+- name: 'deploy nginx vhost configs'
+  include: 'configure.yml'
+  with_items: '{{ nginx_servers | default([]) }}'
+  tags: nginx_config
+
+- name: 'deploy nginx slb config'
+  include: 'configure_frontlb.yml'
+  with_items: '{{ frontlb_servers | default([]) }}'
   tags: nginx_config
