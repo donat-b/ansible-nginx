@@ -76,6 +76,7 @@ server {
       }
     {% else %}
       location {{ lb_site.location | default('/') }} {
+        include proxy_params;
         {% if lb_site.local_name is defined %}
         proxy_set_header Host {{ lb_site.local_name }};
         {% endif %}
