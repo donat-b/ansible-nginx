@@ -61,7 +61,7 @@ server {
       location / {
         location /.well-known/acme-challenge/ {
           add_header Content-Type text/plain;
-          alias '{{ nginx_acme_path }}';
+          alias '{{ nginx_acme_path }}.well-known/acme-challenge/';
         }
 
         return 307 'https://{{ lb_site.public_name | default(lb_site.server_name) }}/';

@@ -11,14 +11,18 @@
     content: '{{ item.tls.cert }}'
     dest: '{{ nginx_tls_path }}/{{ item.server_name }}/fullchain.pem'
   notify: nginx reload
-  when: item.tls is defined
+  when: >
+    item.tls is defined and
+    not (item.certbot_renew is defined and item.certbot_renew)
 
 - name: '{{ title }}: copy TLS key'
   copy:
     content: '{{ item.tls.key }}'
     dest: '{{ nginx_tls_path }}/{{ item.server_name }}/privkey.pem'
   notify: nginx reload
-  when: item.tls is defined
+  when: >
+    item.tls is defined and
+    not (item.certbot_renew is defined and item.certbot_renew)
 
 - name: '{{ title }}: install server config'
   template:

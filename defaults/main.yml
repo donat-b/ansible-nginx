@@ -19,7 +19,7 @@ nginx_tls_key_path        : '{{ nginx_tls_path }}/{{ item.server_name }}_key.pem
 nginx_tls_certbot_fc      : '{{ nginx_tls_path }}/{{ item.server_name }}/fullchain.pem'
 nginx_tls_certbot_key     : '{{ nginx_tls_path }}/{{ item.server_name }}/privkey.pem'
 
-nginx_acme_path       : '/var/lib/acme-challenge/'
+nginx_acme_path       : '/var/www/certbot/'
 
 nginx_dhparam_length:   '1024'
 nginx_dhparam_path:     '/etc/ssl/certs/dhparam.pem'
