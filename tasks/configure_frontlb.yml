@@ -13,7 +13,7 @@
   notify: nginx reload
   when: >
     item.tls is defined and
-    not (item.certbot_renew is defined and item.certbot_renew)
+    not (item.certbot is defined and item.certbot)
 
 - name: '{{ title }}: copy TLS key'
   copy:
@@ -22,7 +22,7 @@
   notify: nginx reload
   when: >
     item.tls is defined and
-    not (item.certbot_renew is defined and item.certbot_renew)
+    not (item.certbot is defined and item.certbot)
 
 - name: '{{ title }}: install server config'
   template:
