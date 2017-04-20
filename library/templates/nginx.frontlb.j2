@@ -39,16 +39,13 @@ server {
 
     client_max_body_size {{ lb_site.client_max_body_size | default('2m') }};
 
-    {% if lb_site.tls is defined %}
+    {% if lb_site.tls is defined or lb_site.certbot is defined and lb_site.certbot %}
       listen {{ lb_site.https_port | default(nginx_https_port) }} ssl;
 
       ssl_certificate      '{{ nginx_tls_path }}/{{ lb_site.server_name }}/fullchain.pem';
       ssl_certificate_key  '{{ nginx_tls_path }}/{{ lb_site.server_name }}/privkey.pem';
 
       ssl_dhparam '{{ nginx_dhparam_path }}';
-      ssl_ciphers 'ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:DHE-DSS-AES128-GCM-SHA256:kEDH+AESGCM:ECDHE-RSA-AES128-SHA256:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA:ECDHE-ECDSA-AES128-SHA:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA:ECDHE-ECDSA-AES256-SHA:DHE-RSA-AES128-SHA256:DHE-RSA-AES128-SHA:DHE-DSS-AES128-SHA256:DHE-RSA-AES256-SHA256:DHE-DSS-AES256-SHA:DHE-RSA-AES256-SHA:AES128-GCM-SHA256:AES256-GCM-SHA384:AES128-SHA256:AES256-SHA256:AES128-SHA:AES256-SHA:AES:CAMELLIA:DES-CBC3-SHA:!aNULL:!eNULL:!EXPORT:!DES:!RC4:!MD5:!PSK:!aECDH:!EDH-DSS-DES-CBC3-SHA:!EDH-RSA-DES-CBC3-SHA:!KRB5-DES-CBC3-SHA';
-      ssl_stapling on;
-      ssl_stapling_verify on;
 
       add_header Strict-Transport-Security max-age=15768000;
     {% else %}
