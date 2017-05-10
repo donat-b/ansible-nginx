@@ -32,8 +32,9 @@
 
 - name: "{{ title }}: install the server"
   apt:
-    package: 'nginx'
+    name: '{{ item }}'
     state: 'present'
+  with_items: '{{ nginx_packages }}'
 
 - name: '{{ title }}: ensure nginx started'
   service:

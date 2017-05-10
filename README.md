@@ -24,6 +24,10 @@ nginx_max_body_size: 2M
 # Enables or disables emitting nginx version in error messages and in the “Server” response header field
 nginx_server_tokens: yes
 
+# List of packages to install
+nginx_packages:
+  - 'nginx-full'
+
 # Vault encrypted SSL certificates and keys
 vault_tls:
   key: |

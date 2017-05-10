@@ -26,6 +26,9 @@ nginx_dhparam_path:     '/etc/ssl/certs/dhparam.pem'
 
 nginx_max_body_size: '2M'
 
+nginx_packages:
+  - 'nginx-full'
+
 # playbook specific toggles
 
 nginx_server_tokens: false
