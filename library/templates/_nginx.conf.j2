@@ -58,10 +58,12 @@ http {
 	# gzip_http_version 1.1;
 	# gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript;
 
+{% if nginx_http_includes is defined %}
   # Custom includes
 {% for file in nginx_http_includes %}
   include {{ file }};
 {% endfor %}
+{% endif %}
 
 	##
 	# Virtual Host Configs
