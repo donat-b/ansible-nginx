@@ -1,7 +1,7 @@
 ---
 # vi: set ft=ansible :
 
-- name: 'set os dependent variables'
+- name: Set OS dependent variables
   include_vars: "{{ item }}"
   with_first_found:
     - files:
@@ -17,13 +17,13 @@
   static: yes
   when: not nginx_skip_install
 
-- name: '{{ title }}: generate Diffie-Hellman group'
+- name: Generate Diffie-Hellman group
   command: 'openssl dhparam -out {{ nginx_dhparam_path }} {{ nginx_dhparam_length }}'
   args:
     creates: '{{ nginx_dhparam_path }}'
   tags: nginx_config
 
-- name: 'deploy config includes'
+- name: Deploy nginx includes
   template:
     src: 'library/templates/nginx.{{ item }}.j2'
     dest: '{{ nginx_etc_path }}/{{ item }}'
@@ -35,7 +35,7 @@
   with_items: '{{ nginx_includes | default([]) }}'
   notify: nginx reload
 
-- name: 'deploy {{ nginx_etc_path }}/nginx.conf'
+- name: Deploy nginx.conf
   template:
     src: 'library/templates/_nginx.conf.j2'
     dest: '{{ nginx_etc_path }}/nginx.conf'
@@ -46,12 +46,12 @@
   tags: nginx_config
   notify: nginx reload
 
-- name: 'deploy nginx vhost configs'
+- name: Deploy nginx vhost configs
   include: 'configure.yml'
   with_items: '{{ nginx_servers | default([]) }}'
   tags: nginx_config
 
-- name: 'deploy nginx slb config'
+- name: Deploy nginx load balancer config
   include: 'configure_frontlb.yml'
   with_items: '{{ frontlb_servers | default([]) }}'
   tags: nginx_config

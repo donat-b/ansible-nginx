@@ -1,42 +1,42 @@
 ---
 # vi: set ft=ansible :
 
-- name: '{{ title }}: ensure repository is present'
+- name: Ensure repository is present
   apt_repository:
     repo: '{{ item.source }}'
     state: present
   with_items: '{{ depends_repos | default([]) }}'
 
-- name: '{{ title }}: ensure required packages are present'
+- name: Ensure required packages are present
   apt:
     package: '{{ item }}'
     state: present
   with_items: '{{ depends | default([]) }}'
 
-- name: '{{ title }}: ensure nginx repository key is present'
+- name: Ensure nginx repository key is present
   apt_key:
     url: '{{ nginx_repo.key }}'
     state: present
     validate_certs: no
   when: nginx_repo.key is defined
 
-- name: '{{ title }}: ensure nginx repository is present'
+- name: Ensure nginx repository is present
   apt_repository:
     repo: '{{ nginx_repo.source }}'
     state: present
 
-- name: '{{ title }}: ensure python-passlib is present'
+- name: Ensure python-passlib is present
   apt:
     package: 'python-passlib'
     state: 'present'
 
-- name: "{{ title }}: install the server"
+- name: Ensure nginx is installed
   apt:
     name: '{{ item }}'
     state: 'present'
   with_items: '{{ nginx_packages }}'
 
-- name: '{{ title }}: ensure nginx started'
+- name: Ensure nginx is running and enabled
   service:
     name: 'nginx'
     state: 'started'

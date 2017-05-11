@@ -1,26 +1,26 @@
 ---
 # vi: set ft=ansible :
 
-- name: '{{ title }}: ensure directory for certificates exists'
+- name: Ensure directory for certificates exists
   file:
     path: '{{ nginx_tls_path }}'
     state: directory
 
-- name: '{{ title }}: copy TLS certificate'
+- name: Copy TLS certificate
   copy:
     content: '{{ item.tls.cert }}'
     dest: '{{ nginx_tls_certificate_path }}'
   notify: nginx reload
   when: item.tls is defined
 
-- name: '{{ title }}: copy TLS key'
+- name: Copy TLS key
   copy:
     content: '{{ item.tls.key }}'
     dest: '{{ nginx_tls_key_path }}'
   notify: nginx reload
   when: item.tls is defined
 
-- name: '{{ title }}: install server config'
+- name: Install nginx server config
   template:
     src: 'library/templates/nginx.{{ item.name }}.j2'
     dest: '{{ nginx_etc_path }}/conf.d/{{ item.name }}.conf'
@@ -30,13 +30,13 @@
     backup: 'yes'
   notify: nginx reload
 
-- name: '{{ title }}: ensure directory for challenges exists'
+- name: Ensure directory for challenges exists
   file:
     path: '{{ nginx_acme_path }}'
     state: 'directory'
   tags: nginx_acme
 
-- name: '{{ title }}: copy ACME challenge'
+- name: Copy ACME challenge
   copy:
     content: '{{ acme }}'
     dest: '{{ nginx_acme_path }}/{{ acme | splitext | first }}'
@@ -45,7 +45,7 @@
     loop_var: acme
   tags: nginx_acme
 
-- name: '{{ title }}: copy htpasswd file'
+- name: Copy htpasswd file
   htpasswd:
     path: '{{ nginx_htpasswd_path }}'
     name: '{{ user.name }}'
