@@ -17,7 +17,7 @@ map $scheme $scheme_https {
 {% if item.lb_method is defined %}
 upstream {{ item.name }} {
   {{ item.lb_method }};
-  {%- for upstream in item.upstreams -%}
+  {% for upstream in item.upstreams %}
   server {{ upstream.address }}
         fail_timeout={{ upstream.fail_timeout | default('10') }}
         max_fails={{ upstream.max_fails | default('1') }}
@@ -25,7 +25,7 @@ upstream {{ item.name }} {
         {{ upstream.down | default(0) | ternary('down', '') }}
         {{ upstream.backup | default(0) | ternary('backup', '') }}
         ;
-  {%- endfor -%}
+  {% endfor %}
 }
 {% endif %}
 {% endfor %}
