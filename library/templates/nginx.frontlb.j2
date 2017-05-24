@@ -33,8 +33,12 @@ upstream {{ item.name }} {
 {% for lb_site in frontlb_servers %}
 
 server {
+{% if lb_site.server_name is iterable and lb_site.server_name is not string %}
+    server_name {{ lb_site.server_name | join(' ') }};
+{% else %}
     server_name {{ lb_site.public_name | default(lb_site.server_name) }}
       {{ lb_site.aliases | default([]) | join(" ") }};
+{% endif %}
 
     access_log {{ nginx_log_path }}/{{ lb_site.name }}.access.log combined_upstream buffer=4k flush=60s;
     error_log {{ nginx_log_path }}/{{ lb_site.name }}.error.log;
