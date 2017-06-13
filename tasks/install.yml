@@ -41,6 +41,7 @@
   apt:
     name: '{{ item }}'
     state: 'present'
+  notify: nginx restart
   with_items: '{{ nginx_packages }}'
 
 - name: Ensure nginx is running and enabled
