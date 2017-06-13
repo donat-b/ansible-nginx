@@ -1,7 +1,6 @@
 ---
-# vi: set ft=ansible :
 
-nginx_repo:
+__nginx_repo:
   source: 'deb http://nginx.org/packages/debian/ {{ ansible_distribution_release }} nginx'
   key:    'https://nginx.org/keys/nginx_signing.key'
 

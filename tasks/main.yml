@@ -1,6 +1,11 @@
 ---
 # vi: set ft=ansible :
 
+- name: Define nginx_repo
+  set_fact:
+    nginx_repo: "{{ __nginx_repo }}"
+  when: nginx_repo is not defined
+
 - name: Set OS dependent variables
   include_vars: "{{ item }}"
   with_first_found:
