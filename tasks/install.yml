@@ -20,6 +20,13 @@
     validate_certs: no
   when: nginx_repo.key is defined
 
+- name: Ensure nginx repository key (id) is present
+  apt_key:
+    keyserver: 'keyserver.ubuntu.com'
+    id: '{{ nginx_repo.key_id }}'    
+    state: present
+  when: nginx_repo.key_id is defined
+
 - name: Ensure nginx repository is present
   apt_repository:
     repo: '{{ nginx_repo.source }}'

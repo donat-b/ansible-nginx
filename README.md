@@ -28,6 +28,12 @@ nginx_server_tokens: yes
 nginx_packages:
   - 'nginx-full'
 
+nginx_repo:
+  source: 'ppa:nginx/stable'
+  key_id: 'ID'
+  # or
+  key: 'URL'
+
 # Vault encrypted SSL certificates and keys
 vault_tls:
   key: |
