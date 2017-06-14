@@ -48,8 +48,10 @@ server {
     {% if lb_site.tls is defined or lb_site.certbot is defined and lb_site.certbot %}
       listen {{ lb_site.https_port | default(nginx_https_port) }} ssl;
 
+      {% if staging != true %}
       ssl_certificate      '{{ nginx_tls_path }}/{{ lb_site.server_name }}/fullchain.pem';
       ssl_certificate_key  '{{ nginx_tls_path }}/{{ lb_site.server_name }}/privkey.pem';
+      {% endif %}
 
       ssl_dhparam '{{ nginx_dhparam_path }}';
 
