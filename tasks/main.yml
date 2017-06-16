@@ -37,7 +37,9 @@
     group: '{{ nginx_user }}'
     backup: 'yes'
   tags: nginx_config
-  with_items: '{{ nginx_includes | default([]) }}'
+  with_flattened:
+    - '{{ nginx_includes | default([]) }}'
+    - '{{ nginx_http_includes | default([]) }}'
   notify: nginx reload
 
 - name: Deploy nginx.conf
