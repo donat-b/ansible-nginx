@@ -23,7 +23,7 @@
 - name: Ensure nginx repository key (id) is present
   apt_key:
     keyserver: 'keyserver.ubuntu.com'
-    id: '{{ nginx_repo.key_id }}'    
+    id: '{{ nginx_repo.key_id }}'
     state: present
   when: nginx_repo.key_id is defined
 
