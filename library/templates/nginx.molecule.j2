@@ -30,8 +30,6 @@ server {
   location / {
     include              proxy_params;
     proxy_pass           http://backend;
-    proxy_set_header     X-Real-Host $host;
-    real_ip_header       X-Forwarded-For;
     proxy_redirect       off;
 
     #auth_basic           'Restricted';
