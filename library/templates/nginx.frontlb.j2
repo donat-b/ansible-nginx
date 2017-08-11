@@ -43,7 +43,7 @@ server {
     access_log {{ nginx_log_path }}/{{ lb_site.name }}.access.log combined_upstream buffer=4k flush=60s;
     error_log {{ nginx_log_path }}/{{ lb_site.name }}.error.log;
 
-    client_max_body_size {{ lb_site.client_max_body_size | default('2m') }};
+    client_max_body_size {{ lb_site.client_max_body_size | default(nginx_max_body_size) }};
 
     {% if lb_site.tls is defined or lb_site.certbot is defined and lb_site.certbot %}
       listen {{ lb_site.https_port | default(nginx_https_port) }} ssl;
