@@ -21,8 +21,8 @@ nginx_tls_certbot_key     : '{{ nginx_tls_path }}/{{ item.server_name }}/privkey
 
 nginx_acme_path       : '/var/www/certbot/'
 
-nginx_dhparam_length:   '1024'
-nginx_dhparam_path:     '/etc/ssl/certs/dhparam.pem'
+nginx_dhparam_length: '2048'
+nginx_dhparam_path:   '/etc/ssl/certs/dhparam.pem'
 
 nginx_max_body_size: '2M'
 
