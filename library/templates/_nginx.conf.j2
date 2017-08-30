@@ -7,7 +7,7 @@ worker_processes auto;
 pid /run/nginx.pid;
 
 events {
-	worker_connections 768;
+	worker_connections {{ nginx_worker_connections }};
 	# multi_accept on;
 }
 

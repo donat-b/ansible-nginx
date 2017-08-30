@@ -3,8 +3,12 @@
 
 title: "nginx"
 
+# main stuff
 nginx_user: 'www-data'
+nginx_worker_connections: 512
+nginx_server_tokens: false
 
+# role specific
 nginx_etc_path: '/etc/nginx'
 nginx_log_path: '/var/log/nginx'
 nginx_tls_path: '{{ nginx_etc_path }}/tls'
@@ -31,5 +35,4 @@ nginx_packages:
 
 # playbook specific toggles
 
-nginx_server_tokens: false
 nginx_skip_install: false

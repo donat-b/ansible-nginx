@@ -21,7 +21,12 @@ nginx_user: 'www-data'
 # the “Content-Length” request header field
 nginx_max_body_size: 2M
 
-# Enables or disables emitting nginx version in error messages and in the “Server” response header field
+# Sets the maximum number of simultaneous connections that can be opened by a
+# worker process.
+nginx_worker_connections: 512
+
+# Enables or disables emitting nginx version in error messages and in
+# the “Server” response header field
 nginx_server_tokens: yes
 
 # List of packages to install
