@@ -15,9 +15,6 @@ nginx_etc_path: '/etc/nginx'
 nginx_log_path: '/var/log/nginx'
 nginx_tls_path: '{{ nginx_etc_path }}/tls'
 
-nginx_http_port : 80
-nginx_https_port: 443
-
 nginx_htpasswd_path: '{{ nginx_etc_path }}/{{ item.server_name }}.htpasswd'
 
 nginx_tls_certificate_path: '{{ nginx_tls_path }}/{{ item.server_name }}_chn.pem'
@@ -32,9 +29,16 @@ nginx_dhparam_path:   '/etc/ssl/certs/dhparam.pem'
 
 nginx_max_body_size: '2M'
 
+# playbook specific toggles
+
+# default log format
+nginx_log_format: 'combined'
+
+# used in frontlb
+nginx_http_port : 80
+nginx_https_port: 443
+
 nginx_packages:
   - 'nginx-full'
-
-# playbook specific toggles
 
 nginx_skip_install: false

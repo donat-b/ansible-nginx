@@ -40,7 +40,7 @@ server {
       {{ lb_site.aliases | default([]) | join(" ") }};
 {% endif %}
 
-    access_log {{ nginx_log_path }}/{{ lb_site.name }}.access.log combined_upstream buffer=4k flush=60s;
+    access_log {{ nginx_log_path }}/{{ lb_site.name }}.access.log {{ nginx_log_format }} buffer=4k flush=60s;
     error_log {{ nginx_log_path }}/{{ lb_site.name }}.error.log;
 
     client_max_body_size {{ lb_site.client_max_body_size | default(nginx_max_body_size) }};
