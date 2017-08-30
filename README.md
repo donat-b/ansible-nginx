@@ -17,6 +17,13 @@ Role Variables
 # Defines user and group credentials used by worker processes
 nginx_user: 'www-data'
 
+# The first parameter sets a timeout during which a keep-alive client
+# connection will stay open on the server side. The zero value disables
+# keep-alive client connections. The optional second parameter sets a value in
+# the “Keep-Alive: timeout=time” response header field. Two parameters may
+# differ
+nginx_keepalive_timeout: 75
+
 # Defines the number of worker processes
 nginx_worker_processes: 'auto'
 
