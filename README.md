@@ -39,6 +39,9 @@ nginx_worker_connections: 512
 # the “Server” response header field
 nginx_server_tokens: yes
 
+# Default log format used in frontlb template
+nginx_log_format: 'combined'
+
 # List of packages to install
 nginx_packages:
   - 'nginx-full'
