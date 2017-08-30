@@ -17,6 +17,9 @@ Role Variables
 # Defines user and group credentials used by worker processes
 nginx_user: 'www-data'
 
+# Defines the number of worker processes
+nginx_worker_processes: 'auto'
+
 # Sets the maximum allowed size of the client request body, specified in
 # the “Content-Length” request header field
 nginx_max_body_size: 2M

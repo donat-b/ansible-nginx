@@ -4,9 +4,10 @@
 title: "nginx"
 
 # main stuff
+nginx_server_tokens: false
 nginx_user: 'www-data'
 nginx_worker_connections: 512
-nginx_server_tokens: false
+nginx_worker_processes: 'auto'
 
 # role specific
 nginx_etc_path: '/etc/nginx'

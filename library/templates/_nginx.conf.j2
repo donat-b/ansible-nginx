@@ -3,7 +3,7 @@
 # vi: set ft=nginx :
 
 user {{ nginx_user }};
-worker_processes auto;
+worker_processes {{ nginx_worker_processes }};
 pid /run/nginx.pid;
 
 events {
