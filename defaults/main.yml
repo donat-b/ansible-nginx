@@ -5,6 +5,7 @@ title: "nginx"
 
 # main stuff
 nginx_keepalive_timeout: 75
+nginx_server_names_hash_bucket_size: 64
 nginx_server_tokens: false
 nginx_user: 'www-data'
 nginx_worker_connections: 512

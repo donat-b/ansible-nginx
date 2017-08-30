@@ -39,6 +39,10 @@ nginx_worker_rlimit_nofile: 8192
 # worker process.
 nginx_worker_connections: 512
 
+# Sets the bucket size for the server names hash tables. The default value
+# depends on the size of the processor’s cache line.
+nginx_server_names_hash_bucket_size: 64
+
 # Enables or disables emitting nginx version in error messages and in
 # the “Server” response header field
 nginx_server_tokens: yes
