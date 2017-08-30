@@ -31,6 +31,10 @@ nginx_worker_processes: 'auto'
 # the “Content-Length” request header field
 nginx_max_body_size: 2M
 
+# Changes the limit on the maximum number of open files (RLIMIT_NOFILE) for
+# worker processes
+nginx_worker_rlimit_nofile: 8192
+
 # Sets the maximum number of simultaneous connections that can be opened by a
 # worker process.
 nginx_worker_connections: 512

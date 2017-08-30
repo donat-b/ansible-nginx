@@ -9,6 +9,7 @@ nginx_server_tokens: false
 nginx_user: 'www-data'
 nginx_worker_connections: 512
 nginx_worker_processes: 'auto'
+nginx_worker_rlimit_nofile: 8192
 
 # role specific
 nginx_etc_path: '/etc/nginx'

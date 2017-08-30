@@ -4,6 +4,7 @@
 
 user {{ nginx_user }};
 worker_processes {{ nginx_worker_processes }};
+worker_rlimit_nofile {{ nginx_worker_rlimit_nofile }};
 pid /run/nginx.pid;
 
 events {
