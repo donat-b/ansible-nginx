@@ -65,6 +65,7 @@ server {
     {% if lb_site.redirect_to_https is defined %}
       location / {
         location /.well-known/acme-challenge/ {
+          auth_basic          off;
           add_header Content-Type text/plain;
           alias '{{ nginx_acme_path }}.well-known/acme-challenge/';
         }
@@ -102,6 +103,13 @@ server {
   {% endfor %}
   deny all;
 {% endif %}
+
+{% if lb_site.auth is defined %}
+  auth_basic           'Restricted';
+  auth_basic_user_file '/etc/nginx/{{ lb_site.server_name }}.htpasswd';
+{% endif %}
+
+
 }
 
 {% endfor %}
