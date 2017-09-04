@@ -17,6 +17,11 @@ Role Variables
 # Defines user and group credentials used by worker processes
 nginx_user: 'www-data'
 
+# auth_basic realm value
+# Enables validation of user name and password using the
+# “HTTP Basic Authentication” protocol. 
+nginx_auth_basic_string: 'Restricted'
+
 # The first parameter sets a timeout during which a keep-alive client
 # connection will stay open on the server side. The zero value disables
 # keep-alive client connections. The optional second parameter sets a value in
