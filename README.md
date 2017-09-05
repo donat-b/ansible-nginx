@@ -19,7 +19,7 @@ nginx_user: 'www-data'
 
 # auth_basic realm value
 # Enables validation of user name and password using the
-# “HTTP Basic Authentication” protocol. 
+# “HTTP Basic Authentication” protocol.
 nginx_auth_basic_string: 'Restricted'
 
 # The first parameter sets a timeout during which a keep-alive client
