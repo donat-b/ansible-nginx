@@ -70,7 +70,7 @@ server {
           alias '{{ nginx_acme_path }}.well-known/acme-challenge/';
         }
 
-        return 307 'https://{{ lb_site.public_name | default(lb_site.server_name) }}/';
+        return 307 'https://{{ lb_site.public_name | default("$server_name") }}/';
       }
     {% elif lb_site.redirect is defined %}
       location {{ lb_site.location | default('/') }} {
