@@ -17,7 +17,7 @@ nginx_etc_path: '/etc/nginx'
 nginx_log_path: '/var/log/nginx'
 nginx_tls_path: '{{ nginx_etc_path }}/tls'
 
-nginx_htpasswd_path: '{{ nginx_etc_path }}/{{ item.server_name }}.htpasswd'
+nginx_htpasswd_path: '{{ nginx_etc_path }}/{{ item.name }}.htpasswd'
 nginx_auth_basic_string: 'Restricted'
 
 nginx_tls_certificate_path: '{{ nginx_tls_path }}/{{ item.server_name }}_chn.pem'
