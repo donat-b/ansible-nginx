@@ -60,6 +60,11 @@ server {
       listen {{ nginx_http_port }};
     {% endif %}
 
+{% if lb_site.auth is defined %}
+      auth_basic           '{{ nginx_auth_basic_string }}';
+      auth_basic_user_file '{{ nginx_etc_path }}/htpasswd_{{ lb_site.name }}';
+{% endif %}
+
     gzip_proxied any;
 
     {% if lb_site.redirect_to_https is defined %}
@@ -103,13 +108,6 @@ server {
   {% endfor %}
   deny all;
 {% endif %}
-
-{% if lb_site.auth is defined %}
-  auth_basic           '{{ nginx_auth_basic_string }}';
-  auth_basic_user_file '{{ nginx_htpasswd_path }}';
-{% endif %}
-
-
 }
 
 {% endfor %}

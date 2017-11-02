@@ -47,7 +47,7 @@
 
 - name: Copy htpasswd file
   htpasswd:
-    path: '{{ nginx_htpasswd_path }}'
+    path: '{{ nginx_etc_path }}/htpasswd_{{ item.name }}';
     name: '{{ user.name }}'
     password: '{{ user.pass }}'
     owner: 'root'
