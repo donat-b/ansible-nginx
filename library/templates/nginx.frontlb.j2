@@ -105,8 +105,8 @@ server {
 {% endif %}
 
 {% if lb_site.auth is defined %}
-  auth_basic           {{ nginx_auth_basic_string }};
-  auth_basic_user_file '/etc/nginx/{{ lb_site.server_name }}.htpasswd';
+  auth_basic           '{{ nginx_auth_basic_string }}';
+  auth_basic_user_file '{{ nginx_htpasswd_path }}';
 {% endif %}
 
 
