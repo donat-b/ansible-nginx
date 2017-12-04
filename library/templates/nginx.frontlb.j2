@@ -94,6 +94,9 @@ server {
         {% if lb_site.local_name is defined %}
         proxy_set_header Host {{ lb_site.local_name }};
         {% endif %}
+        {% if lb_site.custom_headers is defined %}{% for header in lb_site.custom_headers %}
+        proxy_set_header {{ header.name }} {{ header.value }};
+        {% endfor %}{% endif %}
         proxy_pass {{ lb_site.proxy_proto | default('http://') }}{{ lb_site.name }}{{ lb_site.local_path | default('') }};
       }
     {% endif %}
